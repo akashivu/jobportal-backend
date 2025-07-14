@@ -14,7 +14,7 @@ public class JobController {
     @Autowired
     private JobService jobService;
 
-   
+
     @PostMapping
     public JobDto postJob(@RequestBody JobDto jobDto, @RequestParam Long userId) {
         return jobService.createJob(jobDto, userId);

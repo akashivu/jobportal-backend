@@ -1,14 +1,11 @@
-
-FROM openjdk:17-jdk-slim
+# Use Java 21 base image
+FROM eclipse-temurin:21-jdk-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy all project files
+# Copy files
 COPY . .
-
-
-RUN chmod +x mvnw
 
 # Build the project
 RUN ./mvnw clean package -DskipTests
@@ -16,5 +13,5 @@ RUN ./mvnw clean package -DskipTests
 # Expose the port
 EXPOSE 8080
 
-# Start the Spring Boot app
+# Run the JAR
 CMD ["java", "-jar", "target/job-portal-backend-0.0.1-SNAPSHOT.jar"]

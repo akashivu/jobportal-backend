@@ -38,4 +38,18 @@ public class JobService {
                 .map(JobMapper::toDto)
                 .collect(Collectors.toList());
     }
+    public List<JobDto> searchJobs(String title, String location) {
+        List<Job> jobs = jobRepo.searchJobs(title, location);
+        return jobs.stream()
+                .map(job -> JobDto.builder()
+                        .id(job.getId())
+                        .title(job.getTitle())
+                        .description(job.getDescription())
+                        .location(job.getLocation())
+                        .salary(job.getSalary())
+                        .company(job.getCompany())
+                        .build())
+                .toList();
+    }
+
 }

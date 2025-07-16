@@ -19,7 +19,7 @@ public class JobPortalBackendApplication {
 	@Bean
 	public CommandLineRunner runner(UserRepository userRepo, JobRepository jobRepo) {
 		return args -> {
-			// Create a dummy recruiter
+
 			User recruiter = User.builder()
 					.name("John Recruiter")
 					.email("john@job.com")
@@ -29,7 +29,7 @@ public class JobPortalBackendApplication {
 
 			userRepo.save(recruiter);
 
-			// Create a job
+
 			Job job = Job.builder()
 					.title("Java Developer")
 					.company("Google")

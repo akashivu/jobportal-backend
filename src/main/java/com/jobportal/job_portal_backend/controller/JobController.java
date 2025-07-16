@@ -2,6 +2,8 @@ package com.jobportal.job_portal_backend.Controller;
 
 import com.jobportal.job_portal_backend.Dto.JobDto;
 import com.jobportal.job_portal_backend.Service.JobService;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,7 @@ public class JobController {
 
 
     @PostMapping
-    public JobDto postJob(@RequestBody JobDto jobDto, @RequestParam Long userId) {
+    public JobDto postJob(@Valid @RequestBody JobDto jobDto, @RequestParam Long userId) {
         return jobService.createJob(jobDto, userId);
     }
 
@@ -25,4 +27,11 @@ public class JobController {
     public List<JobDto> getAllJobs() {
         return jobService.getAllJobs();
     }
+    @GetMapping("/search")
+    public List<JobDto> searchJobs(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String location) {
+        return jobService.searchJobs(title, location);
+    }
+
 }

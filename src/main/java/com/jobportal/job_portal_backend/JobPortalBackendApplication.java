@@ -4,6 +4,7 @@ import com.jobportal.job_portal_backend.Entity.Job;
 import com.jobportal.job_portal_backend.Entity.User;
 import com.jobportal.job_portal_backend.Repository.JobRepository;
 import com.jobportal.job_portal_backend.Repository.UserRepository;
+import com.jobportal.job_portal_backend.enums.Role;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,10 +22,10 @@ public class JobPortalBackendApplication {
 		return args -> {
 
 			User recruiter = User.builder()
-					.name("John Recruiter")
+					.username("John Recruiter")
 					.email("john@job.com")
 					.password("test123")
-					.role("RECRUITER")
+					.role(Role.RECRUITER)
 					.build();
 
 			userRepo.save(recruiter);

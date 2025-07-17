@@ -25,5 +25,5 @@ public class JobDto {
 
     @NotBlank(message = "Salary is required")
     private String salary;
-    private String postedBy;
+    private Long postedById;
 }

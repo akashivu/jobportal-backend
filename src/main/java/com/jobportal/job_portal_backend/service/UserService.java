@@ -12,11 +12,14 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
     public UserDto registerUser(UserDto userDto) {
 
         User user = User.builder()
-                .name(userDto.getName())
+                .username(userDto.getName())  // or .username() if that's how it's defined
                 .email(userDto.getEmail())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .role(userDto.getRole())
@@ -24,10 +27,9 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
 
-
         return UserDto.builder()
                 .id(savedUser.getId())
-                .name(savedUser.getName())
+                .name(savedUser.getUsername())  // again, adjust if using username
                 .email(savedUser.getEmail())
                 .role(savedUser.getRole())
                 .build();

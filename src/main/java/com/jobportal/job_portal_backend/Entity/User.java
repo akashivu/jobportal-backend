@@ -1,5 +1,6 @@
 package com.jobportal.job_portal_backend.Entity;
 
+import com.jobportal.job_portal_backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,12 +16,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String username;
 
     @Column(unique = true, nullable = false)
     private String email;
 
     private String password;
 
-    private String role; // RECRUITER or JOB_SEEKER
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

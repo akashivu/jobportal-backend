@@ -6,11 +6,8 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class UserDto {
-    private Long id;
-    private String name;
-    private String email;
+public class AuthRequest {
+    private String username;
     private String password;
     private Role role;
 }

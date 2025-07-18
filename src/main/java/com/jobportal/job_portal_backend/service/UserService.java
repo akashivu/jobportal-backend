@@ -17,7 +17,9 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public UserDto registerUser(UserDto userDto) {
-
+        if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already registered.");
+        }
         User user = User.builder()
                 .username(userDto.getName())  // or .username() if that's how it's defined
                 .email(userDto.getEmail())

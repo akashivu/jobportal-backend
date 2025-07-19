@@ -24,8 +24,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGenericException(Exception ex) {
-        return new ResponseEntity<>(Map.of("error", "Something went wrong!"), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+   // @ExceptionHandler(Exception.class)
+   // public ResponseEntity<?> handleGenericException(Exception ex) {
+   //     return new ResponseEntity<>(Map.of("error", "Something went wrong!"), HttpStatus.INTERNAL_SERVER_ERROR);
+   // }
 }

@@ -17,7 +17,7 @@ public class JobController {
     private JobService jobService;
 
 
-    @PostMapping
+    @PostMapping("/post")
     public JobDto postJob(@Valid @RequestBody JobDto jobDto, @RequestParam Long userId) {
         return jobService.createJob(jobDto, userId);
     }

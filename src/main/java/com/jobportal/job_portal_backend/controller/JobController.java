@@ -5,6 +5,7 @@ import com.jobportal.job_portal_backend.Service.JobService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class JobController {
 
 
     @PostMapping("/post")
+    @PreAuthorize("hasRole('RECRUITER')")
     public JobDto postJob(@Valid @RequestBody JobDto jobDto, @RequestParam Long userId) {
         return jobService.createJob(jobDto, userId);
     }

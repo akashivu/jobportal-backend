@@ -44,6 +44,12 @@ public class JobController {
         jobService.applyToJob(jobId, userId);
         return ResponseEntity.ok("Applied to job successfully!");
     }
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/applied-jobs/{userId}")
+    public ResponseEntity<List<JobDto>> getJobsAppliedByUser(@PathVariable Long userId) {
+        List<JobDto> appliedJobs = jobService.getJobsAppliedByUser(userId);
+        return ResponseEntity.ok(appliedJobs);
+    }
 
 
 }

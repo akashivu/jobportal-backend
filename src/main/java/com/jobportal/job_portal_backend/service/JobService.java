@@ -52,6 +52,17 @@ public class JobService {
                         .build())
                 .toList();
     }
+    private JobDto convertToDto(Job job) {
+        return JobDto.builder()
+                .id(job.getId())
+                .title(job.getTitle())
+                .description(job.getDescription())
+                .company(job.getCompany())
+                .location(job.getLocation())
+                .salary(job.getSalary())
+                .build();
+    }
+
     public void applyToJob(Long jobId, Long userId) {
         Job job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found"));
@@ -61,6 +72,19 @@ public class JobService {
 
         job.getAppliedUsers().add(user);
         jobRepo.save(job);
+    }
+    public List<JobDto> getJobsAppliedByUser(Long userId) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        List<Job> appliedJobs = jobRepo.findAll()
+                .stream()
+                .filter(job -> job.getAppliedUsers().contains(user))
+                .toList();
+
+        return appliedJobs.stream()
+                .map(this::convertToDto)
+                .toList();
     }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @EnableMethodSecurity(prePostEnabled = true)
 @SpringBootApplication
+
 public class JobPortalBackendApplication {
 
 	public static void main(String[] args) {

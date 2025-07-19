@@ -3,6 +3,7 @@ package com.jobportal.job_portal_backend.Service;
 import com.jobportal.job_portal_backend.Entity.Job;
 import com.jobportal.job_portal_backend.Entity.User;
 import com.jobportal.job_portal_backend.Dto.JobDto;
+import com.jobportal.job_portal_backend.Exception.ResourceNotFoundException;
 import com.jobportal.job_portal_backend.Repository.JobRepository;
 import com.jobportal.job_portal_backend.Repository.UserRepository;
 import com.jobportal.job_portal_backend.Util.JobMapper;
@@ -50,6 +51,16 @@ public class JobService {
                         .company(job.getCompany())
                         .build())
                 .toList();
+    }
+    public void applyToJob(Long jobId, Long userId) {
+        Job job = jobRepo.findById(jobId)
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found"));
+
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        job.getAppliedUsers().add(user);
+        jobRepo.save(job);
     }
 
 }

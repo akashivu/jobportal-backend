@@ -4,6 +4,7 @@ import com.jobportal.job_portal_backend.Entity.Job;
 import com.jobportal.job_portal_backend.Entity.User;
 import com.jobportal.job_portal_backend.Dto.JobDto;
 import com.jobportal.job_portal_backend.Exception.ResourceNotFoundException;
+import com.jobportal.job_portal_backend.Repository.JobApplicationRepository;
 import com.jobportal.job_portal_backend.Repository.JobRepository;
 import com.jobportal.job_portal_backend.Repository.UserRepository;
 import com.jobportal.job_portal_backend.Util.JobMapper;
@@ -21,7 +22,8 @@ public class JobService {
 
     @Autowired
     private UserRepository userRepo;
-
+    @Autowired
+    JobApplicationRepository applicationRepository;
     public JobDto createJob(JobDto dto, Long userId) {
         User recruiter = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Recruiter not found"));
@@ -64,6 +66,10 @@ public class JobService {
     }
 
     public void applyToJob(Long jobId, Long userId) {
+        if (applicationRepository.existsByUserIdAndJobId(userId, jobId)) {
+            throw new RuntimeException("User already applied to this job");
+        }
+
         Job job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found"));
 

@@ -2,6 +2,7 @@ package com.jobportal.job_portal_backend.Service;
 
 import com.jobportal.job_portal_backend.Dto.UserDto;
 import com.jobportal.job_portal_backend.Entity.User;
+import com.jobportal.job_portal_backend.Exception.ResourceNotFoundException;
 import com.jobportal.job_portal_backend.Repository.UserRepository;
 import com.jobportal.job_portal_backend.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,11 @@ public class UserService {
         return dto;
     }
 
+
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
+        userRepository.delete(user);
+    }
 
 }

@@ -3,9 +3,13 @@ package com.jobportal.job_portal_backend.Service;
 import com.jobportal.job_portal_backend.Dto.UserDto;
 import com.jobportal.job_portal_backend.Entity.User;
 import com.jobportal.job_portal_backend.Repository.UserRepository;
+import com.jobportal.job_portal_backend.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -36,4 +40,23 @@ public class UserService {
                 .role(savedUser.getRole())
                 .build();
     }
+
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+
+        return users.stream()
+                .map(this::convertToUserDto)
+                .collect(Collectors.toList());
+    }
+    private UserDto convertToUserDto(User user) {
+        UserDto dto = new UserDto();
+        dto.setId(user.getId());
+        dto.setName(user.getUsername());
+        dto.setEmail(user.getEmail());
+        dto.setRole(Role.valueOf(user.getRole().name())); // if role is enum
+      
+        return dto;
+    }
+
+
 }

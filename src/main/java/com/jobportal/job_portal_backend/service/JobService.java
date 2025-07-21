@@ -1,6 +1,7 @@
 package com.jobportal.job_portal_backend.Service;
 
 import com.jobportal.job_portal_backend.Entity.Job;
+import com.jobportal.job_portal_backend.Entity.JobApplication;
 import com.jobportal.job_portal_backend.Entity.User;
 import com.jobportal.job_portal_backend.Dto.JobDto;
 import com.jobportal.job_portal_backend.Exception.ResourceNotFoundException;
@@ -92,5 +93,7 @@ public class JobService {
                 .map(this::convertToDto)
                 .toList();
     }
+
+
 
 }

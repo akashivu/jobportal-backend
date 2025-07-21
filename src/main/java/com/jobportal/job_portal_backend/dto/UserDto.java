@@ -3,6 +3,8 @@ package com.jobportal.job_portal_backend.Dto;
 import com.jobportal.job_portal_backend.enums.Role;
 import lombok.*;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,4 +15,6 @@ public class UserDto {
     private String email;
     private String password;
     private Role role;
+
+
 }

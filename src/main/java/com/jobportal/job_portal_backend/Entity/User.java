@@ -4,6 +4,8 @@ import com.jobportal.job_portal_backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @Data
 @Table(name = "users")
@@ -25,4 +27,5 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+    
 }

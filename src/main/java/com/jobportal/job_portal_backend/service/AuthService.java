@@ -18,6 +18,8 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
+
 
 
     public AuthResponse register(AuthRequest request) {
@@ -34,8 +36,8 @@ public class AuthService {
         userRepository.save(user);
 
         String token = jwtService.generateToken(user.getUsername());
-
-        return new AuthResponse(token);
+        String refreshToken = refreshTokenService.createRefreshToken(user.getId()).getToken();
+        return new AuthResponse(token,refreshToken);
     }
 
 
@@ -53,7 +55,7 @@ public class AuthService {
         }
 
         String token = jwtService.generateToken(user.getUsername());
-
-        return new AuthResponse(token);
+        String refreshToken = refreshTokenService.createRefreshToken(user.getId()).getToken();
+        return new AuthResponse(token,refreshToken);
     }
 }

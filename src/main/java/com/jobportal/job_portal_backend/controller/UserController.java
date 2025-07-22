@@ -3,7 +3,10 @@ package com.jobportal.job_portal_backend.Controller;
 import com.jobportal.job_portal_backend.Dto.AuthRequest;
 import com.jobportal.job_portal_backend.Dto.AuthResponse;
 import com.jobportal.job_portal_backend.Dto.UserDto;
+import com.jobportal.job_portal_backend.Entity.RefreshToken;
+import com.jobportal.job_portal_backend.Entity.User;
 import com.jobportal.job_portal_backend.Service.JwtService;
+import com.jobportal.job_portal_backend.Service.RefreshTokenService;
 import com.jobportal.job_portal_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +34,8 @@ public class UserController {
     private UserDetailsService userDetailsService;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private RefreshTokenService refreshTokenService;
 
     @PostMapping("/register")
     public UserDto registerUser(@RequestBody UserDto userDto) {
@@ -49,8 +54,16 @@ public class UserController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
         String token = jwtService.generateToken(userDetails.getUsername());
 
-        return ResponseEntity.ok(new AuthResponse(token));
+
+        User user = userService.getUserByEmail(authRequest.getUsername());
+
+
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+
+
+        return ResponseEntity.ok(new AuthResponse(token, refreshToken.getToken()));
     }
+
     @GetMapping("/admin/users")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserDto>> getAllUsers() {

@@ -41,6 +41,9 @@ public class UserService {
                 .role(savedUser.getRole())
                 .build();
     }
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+    }
 
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();

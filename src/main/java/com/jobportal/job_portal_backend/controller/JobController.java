@@ -1,14 +1,14 @@
 package com.jobportal.job_portal_backend.Controller;
-
 import com.jobportal.job_portal_backend.Dto.JobDto;
+import com.jobportal.job_portal_backend.Dto.JobSearchRequest;
+import com.jobportal.job_portal_backend.Entity.Job;
 import com.jobportal.job_portal_backend.Service.JobService;
-
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -36,6 +36,11 @@ public class JobController {
             @RequestParam(required = false) String location) {
         return jobService.searchJobs(title, location);
     }
+    @PostMapping("/search-adv")
+    public ResponseEntity<Page<Job>> searchJobs(@RequestBody JobSearchRequest request) {
+        return ResponseEntity.ok(jobService.searchJobs(request));
+    }
+
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/{jobId}/apply")
     public ResponseEntity<String> applyToJob(

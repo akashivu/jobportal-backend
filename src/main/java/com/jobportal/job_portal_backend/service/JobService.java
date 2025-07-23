@@ -1,17 +1,20 @@
 package com.jobportal.job_portal_backend.Service;
-
+import com.jobportal.job_portal_backend.Dto.JobSearchRequest;
 import com.jobportal.job_portal_backend.Entity.Job;
-import com.jobportal.job_portal_backend.Entity.JobApplication;
 import com.jobportal.job_portal_backend.Entity.User;
 import com.jobportal.job_portal_backend.Dto.JobDto;
 import com.jobportal.job_portal_backend.Exception.ResourceNotFoundException;
 import com.jobportal.job_portal_backend.Repository.JobApplicationRepository;
 import com.jobportal.job_portal_backend.Repository.JobRepository;
 import com.jobportal.job_portal_backend.Repository.UserRepository;
+import com.jobportal.job_portal_backend.Specification.JobSpecification;
 import com.jobportal.job_portal_backend.Util.JobMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -92,6 +95,11 @@ public class JobService {
         return appliedJobs.stream()
                 .map(this::convertToDto)
                 .toList();
+    }
+    public Page<Job> searchJobs(JobSearchRequest request) {
+        Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
+        Specification<Job> spec = JobSpecification.getJobs(request);
+        return jobRepo.findAll(spec, pageable);
     }
 
 

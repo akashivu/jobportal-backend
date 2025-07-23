@@ -4,7 +4,7 @@ A fully-featured Spring Boot backend for a Job Portal system, supporting:
 - User & Recruiter authentication with JWT + Refresh Token
 - Role-based access control (RECRUITER, USER)
 - Post & search jobs by title/location
-- Oracle DB integration
+  
 
 ## Features
 
@@ -20,7 +20,6 @@ A fully-featured Spring Boot backend for a Job Portal system, supporting:
 
 - Java + Spring Boot
 - Spring Security + JWT + Refresh Token
-- Oracle DB
 - Maven
 
 ##  Folder Structure
@@ -44,8 +43,7 @@ A fully-featured Spring Boot backend for a Job Portal system, supporting:
 ##  Setup Instructions
 
 1. Clone the repo
-2. Setup Oracle DB and update `application.properties`
-3. Run using IDE or `mvn spring-boot:run`
+2. Run using IDE or `mvn spring-boot:run`
 
 ---
 

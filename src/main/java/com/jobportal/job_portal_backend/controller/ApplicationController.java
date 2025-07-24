@@ -19,13 +19,13 @@ public class ApplicationController {
       private JobService jobService;
      @Autowired
       private ApplicationService applicationService;
-    @PostMapping()
+    @PostMapping("/{jobId}")
     public ResponseEntity<String> applyToJob(@PathVariable Long jobId, Authentication authentication){
         String email = authentication.getName();
         String res= applicationService.applyToJob(jobId,email);
         return ResponseEntity.ok(res);
     }
-    @GetMapping
+    @GetMapping("/my")
     public ResponseEntity<List<JobApplication>> getApplicationByUser(Authentication authentication){
         String email=authentication.getName();
         return ResponseEntity.ok(applicationService.getApplicationByUser(email));

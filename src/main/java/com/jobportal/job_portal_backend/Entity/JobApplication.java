@@ -1,11 +1,15 @@
 package com.jobportal.job_portal_backend.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "job_applications")
+@Data
+@AllArgsConstructor
 public class JobApplication {
 
     @Id

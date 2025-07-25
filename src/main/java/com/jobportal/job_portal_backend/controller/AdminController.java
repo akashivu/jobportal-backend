@@ -29,5 +29,10 @@ public class AdminController {
         userService.deleteUser(id);
         return ResponseEntity.ok("User deleted successfully");
     }
+     @PutMapping("/user/{id}/promote")
+    public ResponseEntity<String> promoteUser(@PathVariable Long id){
+         String message=userService.promoteUserToRecruiter(id);
+        return ResponseEntity.ok(message);
 
+     }
 }

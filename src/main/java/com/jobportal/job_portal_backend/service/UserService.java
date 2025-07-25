@@ -6,6 +6,7 @@ import com.jobportal.job_portal_backend.Exception.ResourceNotFoundException;
 import com.jobportal.job_portal_backend.Repository.UserRepository;
 import com.jobportal.job_portal_backend.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +58,7 @@ public class UserService {
         dto.setId(user.getId());
         dto.setName(user.getUsername());
         dto.setEmail(user.getEmail());
-        dto.setRole(Role.valueOf(user.getRole().name())); // if role is enum
+        dto.setRole(user.getRole());
       
         return dto;
     }
@@ -69,4 +70,10 @@ public class UserService {
         userRepository.delete(user);
     }
 
+    public String promoteUserToRecruiter(Long id) {
+        User user =userRepository.findById(id).orElseThrow();
+        user.getRole().add(Role.RECRUITER);
+        userRepository.save(user);
+        return "user promoted succesfully";
+    }
 }

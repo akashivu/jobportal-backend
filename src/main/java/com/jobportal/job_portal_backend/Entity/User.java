@@ -4,6 +4,7 @@ import com.jobportal.job_portal_backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,6 +27,6 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Set<Role> role = new HashSet<>();
     
 }

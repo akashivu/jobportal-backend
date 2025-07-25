@@ -12,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
+import java.util.Set;
+
 @EnableMethodSecurity(prePostEnabled = true)
 @SpringBootApplication
 
@@ -32,7 +34,7 @@ public class JobPortalBackendApplication {
 						.username("John Recruiter")
 						.email("john@job.com")
 						.password("test123")
-						.role(Role.RECRUITER)
+						.role(Set.of(Role.USER))
 						.build();
 
 				userRepo.save(recruiter);

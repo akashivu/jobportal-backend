@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,8 +24,10 @@ public class ApplicationService {
     private UserRepository userRepository;
     @Autowired
     private JobRepository jobRepository;
+    @Autowired
+    private FileStorageService fileStorageService;
 
-    public String applyToJob(Long jobId, String username) {
+    public String applyToJob(Long jobId, @RequestPart("resume") MultipartFile resume, String username) {
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         Job job = jobRepository.findById(jobId)
@@ -33,8 +37,13 @@ public class ApplicationService {
         if (alreadyApplied) {
             return "You have already applied to this job.";
         }
+        String fileName = fileStorageService.storeFile(resume);
+        JobApplication app = new JobApplication();
+        app.setUser(user);
+        app.setJob(job);
+        app.setAppliedAt(LocalDate.now());
+        app.setResumeFileName(fileName);
 
-        JobApplication app = new JobApplication(null, user, job, LocalDate.now());
         jobApplicationRepository.save(app);
         return "Application submitted successfully.";
     }

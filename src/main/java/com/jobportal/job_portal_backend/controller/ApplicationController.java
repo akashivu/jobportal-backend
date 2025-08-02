@@ -6,10 +6,8 @@ import com.jobportal.job_portal_backend.Service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,9 +18,9 @@ public class ApplicationController {
      @Autowired
       private ApplicationService applicationService;
     @PostMapping("/{jobId}")
-    public ResponseEntity<String> applyToJob(@PathVariable Long jobId, Authentication authentication){
+    public ResponseEntity<String> applyToJob(@PathVariable Long jobId, @RequestPart("resume") MultipartFile resume, Authentication authentication){
         String email = authentication.getName();
-        String res= applicationService.applyToJob(jobId,email);
+        String res= applicationService.applyToJob(jobId,resume,email);
         return ResponseEntity.ok(res);
     }
     @GetMapping("/my")
